@@ -97,6 +97,7 @@ function datosShow() {
                         </div>
                             
                             <p class="card-text">Fecha de Entrega Estimada: ${doc.data().estimado}</p>
+                            <p class="card-text">Guia Via Cargo: ${doc.data().via}</p>
                             <p class="status badge badge-warning p-3">En Agencia</p>
                     </div>
                 </div>
