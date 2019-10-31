@@ -32,7 +32,7 @@ function datosShow() {
                     <h5 class="card-title text-left font-weight-bold">${doc.data().name}</h5>
                     <div class="row">
                         <div class="col-sm-6">
-                                <p class="card-text">Punto de Entrega: ${doc.data().punto_de_entrega}</p>
+                                <p class="card-text">Entrega en: ${doc.data().punto_de_entrega}</p>
                         </div>
                         <div class="col-sm-6">
                                 <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
@@ -51,7 +51,7 @@ function datosShow() {
                         <h5 class="card-title text-left font-weight-bold">${doc.data().name}</h5>
                         <div class="row">
                             <div class="col-sm-6">
-                                    <p class="card-text">Punto de Entrega: ${doc.data().punto_de_entrega}</p>
+                                    <p class="card-text">Entrega en: ${doc.data().punto_de_entrega}</p>
                             </div>
                             <div class="col-sm-6">
                                     <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
@@ -70,7 +70,7 @@ function datosShow() {
                     <h5 class="card-title text-left font-weight-bold">${doc.data().name}</h5>
                     <div class="row">
                         <div class="col-sm-6">
-                                <p class="card-text">Punto de Entrega: ${doc.data().punto_de_entrega}</p>
+                                <p class="card-text">Entrega en: ${doc.data().punto_de_entrega}</p>
                         </div>
                         <div class="col-sm-6">
                                 <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
@@ -89,7 +89,7 @@ function datosShow() {
                         <h5 class="card-title text-left font-weight-bold">${doc.data().name}</h5>
                         <div class="row">
                             <div class="col-sm-6">
-                                    <p class="card-text">Punto de Entrega: ${doc.data().punto_de_entrega}</p>
+                                    <p class="card-text">Entrega en: ${doc.data().punto_de_entrega}</p>
                             </div>
                             <div class="col-sm-6">
                                     <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
@@ -109,7 +109,7 @@ function datosShow() {
                     <h5 class="card-title text-left font-weight-bold">${doc.data().name}</h5>
                     <div class="row">
                         <div class="col-sm-6">
-                                <p class="card-text">Punto de Entrega: ${doc.data().punto_de_entrega}</p>
+                                <p class="card-text">Entrega en: ${doc.data().punto_de_entrega}</p>
                         </div>
                         <div class="col-sm-6">
                                 <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
