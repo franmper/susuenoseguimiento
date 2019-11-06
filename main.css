@@ -14,3 +14,13 @@ body {
 .navegacion {
     border-radius: 0.2rem;
 }
+.last{
+    font-size: 0.7rem;
+}
+.but {
+    border: none;
+    background: none;
+}
+.icon {
+    color: white;
+}
