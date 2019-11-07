@@ -18,22 +18,28 @@
         <div class="row justify-content-center">
             <div class="col">
                 <h1>Agregar Envio</h1>
+                <label class="label">Numero de Guia</label>
                 <input type="text" id="guia" placeholder="Guia, Ejemplo CZMML000001" class="form-control">
-                <div  id="last"></div>
-                <input type="text" id="nombre" placeholder="Nombre y Apelledio de la persona que compro" class="form-control my-3">
-                <input type="text" id="punto_de_entrega" placeholder="Punto de entrega" class="form-control my-3">
-                <input type="text" id="bultos" placeholder="Cantidad de Bultos del pedido" class="form-control my-3">
-                <div class="input-group mb-3">
+                <div id="last"></div>
+                <label class="label">Nombre y Apellido</label>
+                <input type="text" id="nombre" placeholder="Nombre y Apelledio de la persona que compro" class="form-control mb-2">
+                <label class="label">Entrega</label>
+                <input type="text" id="punto_de_entrega" placeholder="Punto de entrega" class="form-control mb-2">
+                <label class="label">Cantidad de Bultos</label>
+                <input type="text" id="bultos" placeholder="Cantidad de Bultos del pedido" class="form-control mb-2">
+                <label class="label">Estado del Pedido</label>
+                <div class="input-group mb-2">
                     <select class="custom-select" id="select">
-                      <option selected>Estado del Pedido</option>
-                      <option value="Pedido Recibido">Pedido Recibido</option>
-                      <option value="Pedido Despachado">Pedido Despachado</option>
-                      <option value="En Viaje">En Viaje</option>
-                      <option value="En Agencia">En Agencia</option>
-                      <option value="Entregado">Entregado</option>
+                        <option selected>Estado del Pedido</option>
+                        <option value="Pedido Recibido">Pedido Recibido</option>
+                        <option value="Pedido Despachado">Pedido Despachado</option>
+                        <option value="En Viaje">En Viaje</option>
+                        <option value="En Agencia">En Agencia</option>
+                        <option value="Entregado">Entregado</option>
                     </select>
-                  </div>
-                  <input type="text" id="via" placeholder="Guia Via Cargo" class="form-control my-3">
+                </div>
+                <label class="label">Numero de Guia de Via Cargo</label>
+                <input type="text" id="via" placeholder="Guia Via Cargo" class="form-control mb-2">
                 <button class="btn btn-info mt-3" id="info" onclick="guardar()">Guardar</button>
             </div>
         </div>

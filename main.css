@@ -24,3 +24,10 @@ body {
 .icon {
     color: white;
 }
+.imgWeb {
+    height: 50px;
+}
+.label {
+    font-size: 0.7rem;
+    color: #a0a0a0;
+}
