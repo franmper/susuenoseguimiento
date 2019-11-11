@@ -140,7 +140,7 @@ function guardar() {
     var select = document.getElementById('select').value;
     var via = document.getElementById('via').value;
     var guia = document.getElementById('guia').value;
-    
+    var producto = document.getElementById('producto').value;
    
     db.collection("seguimiento").add({
         name: nombre,
@@ -149,6 +149,7 @@ function guardar() {
         status: select,
         via: via,
         guia_id: guia,
+        producto: producto
     })
     .then(function(docRef) {
         console.log("Document written with ID: ", docRef.id);
@@ -158,6 +159,7 @@ function guardar() {
         document.getElementById('via').value = '';
         document.getElementById('bultos').value = '';
         document.getElementById('guia').value = '';
+        document.getElementById('producto').value = '';
     })
     .catch(function(error) {
         console.error("Error adding document: ", error);
@@ -180,6 +182,7 @@ function todos() {
                         </div>
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                         <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                         <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                         <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -197,6 +200,7 @@ function todos() {
                         </div>
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                         <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                         <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                         <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -215,6 +219,7 @@ function todos() {
                         </div>
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item" id="guiaEdit"><span id="guia">${doc.data().guia_id}</span></li>
+                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                         <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                         <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                         <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -233,6 +238,7 @@ function todos() {
                         </div>
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                         <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                         <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                         <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -251,6 +257,7 @@ function todos() {
                         </div>
                         <ul class="list-group list-group-flush">
                         <li class="list-group-item"><span id="guiaid">${doc.data().guia_id}</span></li>
+                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                         <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                         <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                         <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -283,6 +290,8 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status){
     document.getElementById('select').value = status;
     document.getElementById('via').value = via;
     document.getElementById('bultos').value = bultos;
+    document.getElementById('producto').value = producto;
+
 
 
     var boton = document.getElementById('info');
@@ -296,6 +305,8 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status){
         var select = document.getElementById('select').value;
         var via = document.getElementById('via').value;
         var guia = document.getElementById('guia').value;
+        var producto = document.getElementById('producto').value;
+
 
         return db.collection("seguimiento").doc(id).update({
             name: nombre,
@@ -304,6 +315,7 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status){
             status: select,
             via: via,
             guia_id: guia,
+            producto: producto,
         })
         .then(function() {
             console.log("Document successfully updated!");
@@ -314,6 +326,7 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status){
             document.getElementById('via').value = '';
             document.getElementById('bultos').value = '';
             document.getElementById('guia').value = '';
+            document.getElementById('producto').value = '';
         })
         .catch(function(error) {
             // The document probably doesn't exist.
@@ -343,6 +356,7 @@ function recibidoBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                      <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                       <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                       <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                       <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -367,6 +381,7 @@ function despachadoBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -391,6 +406,7 @@ function viajeBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item" id="guiaEdit"><span id="guia">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -415,6 +431,7 @@ function agenciaBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
@@ -439,6 +456,7 @@ function entregadoBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span id="guiaid">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
