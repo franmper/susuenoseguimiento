@@ -16,10 +16,11 @@ var db = firebase.firestore();
 var datos = document.getElementById('datos'); 
 var btn = document.getElementById('button').addEventListener('click', datosShow);
 
-
 function datosShow() {
     var seg = document.getElementById('seg').value;
     console.log(seg);
+
+    
 
     db.collection("seguimiento").where('guia_id', '==', seg).onSnapshot((querySnapshot) => {
         datos.innerHTML = '';
@@ -132,7 +133,6 @@ db.collection("seguimiento").orderBy("guia_id", "desc").limit(1).onSnapshot((que
     });
 });
 
-
 function guardar() {
     var nombre = document.getElementById('nombre').value;
     var punto_de_entrega = document.getElementById('punto_de_entrega').value;
@@ -152,7 +152,6 @@ function guardar() {
         producto: producto
     })
     .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
         document.getElementById('nombre').value = '';
         document.getElementById('punto_de_entrega').value = '';
         document.getElementById('status').value = '';
@@ -169,42 +168,36 @@ function guardar() {
 var data = document.getElementById('data'); 
 
 function todos() {
+
+    
+
     db.collection("seguimiento").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
-        querySnapshot.forEach((doc) => {        
+        querySnapshot.forEach((doc) => {    
+            let pre = `<div class="col-sm-12 col-md-6 col-lg-4 mb-2">
+               <div class="card">
+               <div class="card-header">
+               <h3 id="name">${doc.data().name}</h3>
+               </div>
+               <ul class="list-group list-group-flush">
+               <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+               <li class="list-group-item"><span class="font-weight-bold">Fecha de Compra: </span>${doc.data().fechacompra}</li>
+               <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
+               <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
+               <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
+               <li class="list-group-item" id="guiaVia">${doc.data().via}</li>`   
             if (doc.data().status == 'Pedido Recibido') {
                 data.innerHTML += `
-
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                    <div class="card">
-                        <div class="card-header">
-                        <h3 id="name">${doc.data().name}</h3>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
-                        <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
-                        <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                        <li class="badge badge-danger p-3" id="status">Pedido Recibido <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                        ${pre}
+                        <li class="badge badge-danger p-3" id="status">Pedido Recibido <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                         </ul>
                     </div>
                 </div> 
                 `
             }else if (doc.data().status == 'Pedido Despachado') {
                 data.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                    <div class="card">
-                        <div class="card-header">
-                        <h3 id="name">${doc.data().name}</h3>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
-                        <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
-                        <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                        <li class="badge badge-primary p-3" id="status">Pedido Despachado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                        ${pre}
+                        <li class="badge badge-primary p-3" id="status">Pedido Despachado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                         </ul>
                     </div>
                 </div>
@@ -212,18 +205,8 @@ function todos() {
                 `
             }else if (doc.data().status == 'En Viaje') {
                 data.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                    <div class="card">
-                        <div class="card-header">
-                        <h3 id="name">${doc.data().name}</h3>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item" id="guiaEdit"><span id="guia">${doc.data().guia_id}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
-                        <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
-                        <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                        <li class="badge badge-info p-3" id="status">En Viaje <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                        ${pre}
+                        <li class="badge badge-info p-3" id="status">En Viaje <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                         </ul>
                     </div>
                 </div>
@@ -231,18 +214,8 @@ function todos() {
                 `
             }else if (doc.data().status == 'En Agencia') {
                 data.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                    <div class="card">
-                        <div class="card-header">
-                        <h3 id="name">${doc.data().name}</h3>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
-                        <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
-                        <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                        <li class="badge badge-warning p-3" id="status">En Agencia <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                        ${pre}
+                        <li class="badge badge-warning p-3" id="status">En Agencia <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                         </ul>
                     </div>
                 </div>
@@ -250,18 +223,8 @@ function todos() {
                 `
             }else if (doc.data().status == 'Entregado') {
                 data.innerHTML += `
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-2">
-                    <div class="card">
-                        <div class="card-header">
-                        <h3 id="name">${doc.data().name}</h3>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><span id="guiaid">${doc.data().guia_id}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
-                        <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
-                        <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
-                        <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                        <li class="badge badge-success p-3" id="status">Entregado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                        ${pre}  
+                        <li class="badge badge-success p-3" id="status">Entregado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                         </ul>
                     </div>
                 </div>
@@ -283,7 +246,8 @@ function eliminar(id){
     });
 };
 
-function editar(id, name, bultos, via, punto_de_entrega, guia_id, status){
+function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, producto){
+
     document.getElementById('guia').value = guia_id;    
     document.getElementById('nombre').value = name;
     document.getElementById('punto_de_entrega').value = punto_de_entrega;
@@ -291,8 +255,6 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status){
     document.getElementById('via').value = via;
     document.getElementById('bultos').value = bultos;
     document.getElementById('producto').value = producto;
-
-
 
     var boton = document.getElementById('info');
     boton.innerHTML = 'Editar';
@@ -356,11 +318,12 @@ function recibidoBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                      <li class="list-group-item"><span class="font-weight-bold">Fecha de Compra: </span>${doc.data().fechacompra}</li>
                       <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                       <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                       <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                       <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                      <li class="badge badge-danger p-3" id="status">Pedido Recibido <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                      <li class="badge badge-danger p-3" id="status">Pedido Recibido <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                     </ul>
                 </div>
             </div> 
@@ -381,11 +344,12 @@ function despachadoBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold">Fecha de Compra: </span>${doc.data().fechacompra}</li>
                     <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                    <li class="badge badge-primary p-3" id="status">Pedido Despachado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                    <li class="badge badge-primary p-3" id="status">Pedido Despachado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                     </ul>
                 </div>
             </div>
@@ -406,11 +370,12 @@ function viajeBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item" id="guiaEdit"><span id="guia">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold">Fecha de Compra: </span>${doc.data().fechacompra}</li>
                     <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                    <li class="badge badge-info p-3" id="status">En Viaje <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                    <li class="badge badge-info p-3" id="status">En Viaje <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                     </ul>
                 </div>
             </div>
@@ -431,11 +396,12 @@ function agenciaBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span id="guia">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold">Fecha de Compra: </span>${doc.data().fechacompra}</li>
                     <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                    <li class="badge badge-warning p-3" id="status">En Agencia <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                    <li class="badge badge-warning p-3" id="status">En Agencia <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                     </ul>
                 </div>
             </div>
@@ -456,11 +422,12 @@ function entregadoBuscar() {
                     </div>
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item"><span id="guiaid">${doc.data().guia_id}</span></li>
+                    <li class="list-group-item"><span class="font-weight-bold">Fecha de Compra: </span>${doc.data().fechacompra}</li>
                     <li class="list-group-item"><span class="font-weight-bold"> Producto:</span> <span id="producto">${doc.data().producto}</span></li>
                     <li class="list-group-item"><span class="font-weight-bold"> Bultos:</span> <span id="bultos">${doc.data().bultos}</span></li>
                     <li class="list-group-item"> <span class="font-weight-bold"> Punto de Entrega:</span> <span id="puntoDeEntrega">${doc.data().punto_de_entrega}</span></li>
                     <li class="list-group-item" id="guiaVia">${doc.data().via}</li>
-                    <li class="badge badge-success p-3" id="status">Entregado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
+                    <li class="badge badge-success p-3" id="status">Entregado <button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></li>
                     </ul>
                 </div>
             </div>
