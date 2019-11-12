@@ -142,6 +142,7 @@ function guardar() {
     var guia = document.getElementById('guia').value;
     var producto = document.getElementById('producto').value;
     var fecha_compra = document.getElementById('fecha_compra').value;
+    var venta = document.getElementById('selectvta').value;
 
     db.collection("seguimiento").add({
         name: nombre,
@@ -151,7 +152,8 @@ function guardar() {
         via: via,
         guia_id: guia,
         producto: producto,
-        fechacompra: fecha_compra
+        fechacompra: fecha_compra,
+        venta: venta
     })
     .then(function(docRef) {
         document.getElementById('nombre').value = '';
@@ -162,6 +164,7 @@ function guardar() {
         document.getElementById('guia').value = '';
         document.getElementById('producto').value = '';
         document.getElementById('fecha_compra').value = '';
+        document.getElementById('selectvta').value = '';
 
     })
     .catch(function(error) {
@@ -172,13 +175,14 @@ function guardar() {
 var data = document.getElementById('data'); 
 
 function todos() {
-    db.collection("seguimiento").onSnapshot((querySnapshot) => {
+    db.collection("seguimiento").orderBy("guia_id", "desc").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
         querySnapshot.forEach((doc) => {    
             let pre = `
             <tr>
                 <th scope="row">${doc.data().guia_id}</th>
                 <td>${doc.data().fechacompra}</td>
+                <td>${doc.data().venta}</td>
                 <td class="font-weight-bold">${doc.data().name}</td>
                 <td>${doc.data().producto}</td>
                 <td>${doc.data().bultos}</td>
@@ -189,21 +193,21 @@ function todos() {
                 data.innerHTML += `
                         ${pre}
                         <td class="bg-danger text-light">Pedido Recibido</td>
-                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
                     </tr>
                 `
             }else if (doc.data().status == 'Pedido Despachado') {
                 data.innerHTML += `
                         ${pre}
                         <td class="bg-primary text-light">Pedido Despachado</td>
-                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
                     </tr>
                 `
             }else if (doc.data().status == 'En Viaje') {
                 data.innerHTML += `
                         ${pre}
                         <td class="bg-info text-light">En Viaje</td>
-                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
                     </tr>
             
                 `
@@ -211,7 +215,7 @@ function todos() {
                 data.innerHTML += `
                         ${pre}
                         <td class="bg-warning text-light">En Agencia</td>
-                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
                     </tr>
             
                 `
@@ -219,7 +223,7 @@ function todos() {
                 data.innerHTML += `
                         ${pre}  
                         <td class="bg-success text-light">Entregado</td>
-                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                        <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
                     </tr>
             
                 `
@@ -239,7 +243,7 @@ function eliminar(id){
     });
 };
 
-function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, producto, fechacompra){
+function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, producto, fechacompra, venta){
 
     document.getElementById('guia').value = guia_id;    
     document.getElementById('nombre').value = name;
@@ -249,6 +253,7 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, produc
     document.getElementById('bultos').value = bultos;
     document.getElementById('producto').value = producto;
     document.getElementById('fecha_compra').value = fechacompra;
+    document.getElementById('selectvta').value = venta;
 
     var boton = document.getElementById('info');
     boton.innerHTML = 'Editar';
@@ -263,6 +268,7 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, produc
         var guia = document.getElementById('guia').value;
         var producto = document.getElementById('producto').value;
         var fecha_compra = document.getElementById('fecha_compra').value;
+        var venta = document.getElementById('selectvta').value;
 
 
         return db.collection("seguimiento").doc(id).update({
@@ -274,6 +280,7 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, produc
             guia_id: guia,
             producto: producto,
             fechacompra: fecha_compra,
+            venta: venta
         })
         .then(function() {
             console.log("Document successfully updated!");
@@ -286,6 +293,7 @@ function editar(id, name, bultos, via, punto_de_entrega, guia_id, status, produc
             document.getElementById('guia').value = '';
             document.getElementById('producto').value = '';
             document.getElementById('fecha_compra').value = '';
+            document.getElementById('selectvta').value = '';
         })
         .catch(function(error) {
             // The document probably doesn't exist.
@@ -303,7 +311,7 @@ var _entregado = document.getElementById('entregado').addEventListener('click', 
 var _todos = document.getElementById('todos').addEventListener('click', todos);
 
 function recibidoBuscar() {
-    db.collection("seguimiento").where('status', '==', 'Pedido Recibido').onSnapshot((querySnapshot) => {
+    db.collection("seguimiento").where('status', '==', 'Pedido Recibido').orderBy("guia_id", "desc").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
@@ -311,20 +319,21 @@ function recibidoBuscar() {
             <tr>
                 <th scope="row">${doc.data().guia_id}</th>
                 <td>${doc.data().fechacompra}</td>
+                <td>${doc.data().venta}</td>
                 <td class="font-weight-bold">${doc.data().name}</td>
                 <td>${doc.data().producto}</td>
                 <td>${doc.data().bultos}</td>
                 <td>${doc.data().punto_de_entrega}</td>
                 <td>${doc.data().via}</td>
                 <td class="bg-danger text-light">Pedido Recibido</td>
-                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
             </tr>
             `
         });
     });
 };
 function despachadoBuscar() {
-    db.collection("seguimiento").where('status', '==', 'Pedido Despachado').onSnapshot((querySnapshot) => {
+    db.collection("seguimiento").where('status', '==', 'Pedido Despachado').orderBy("guia_id", "desc").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
@@ -332,20 +341,21 @@ function despachadoBuscar() {
             <tr>
                 <th scope="row">${doc.data().guia_id}</th>
                 <td>${doc.data().fechacompra}</td>
+                <td>${doc.data().venta}</td>
                 <td class="font-weight-bold">${doc.data().name}</td>
                 <td>${doc.data().producto}</td>
                 <td>${doc.data().bultos}</td>
                 <td>${doc.data().punto_de_entrega}</td>
                 <td>${doc.data().via}</td>
                 <td class="bg-primary text-light">Pedido Despachado</td>
-                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
             </tr>
             `
         });
     });
 };
 function viajeBuscar() {
-    db.collection("seguimiento").where('status', '==', 'En Viaje').onSnapshot((querySnapshot) => {
+    db.collection("seguimiento").where('status', '==', 'En Viaje').orderBy("guia_id", "desc").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
@@ -353,20 +363,21 @@ function viajeBuscar() {
             <tr>
                 <th scope="row">${doc.data().guia_id}</th>
                 <td>${doc.data().fechacompra}</td>
+                <td>${doc.data().venta}</td>
                 <td class="font-weight-bold">${doc.data().name}</td>
                 <td>${doc.data().producto}</td>
                 <td>${doc.data().bultos}</td>
                 <td>${doc.data().punto_de_entrega}</td>
                 <td>${doc.data().via}</td>
                 <td class="bg-info text-light">En Viaje</td>
-                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
             </tr>
             `
         });
     });
 };
 function agenciaBuscar() {
-    db.collection("seguimiento").where('status', '==', 'En Agencia').onSnapshot((querySnapshot) => {
+    db.collection("seguimiento").where('status', '==', 'En Agencia').orderBy("guia_id", "desc").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
@@ -374,20 +385,21 @@ function agenciaBuscar() {
             <tr>
                 <th scope="row">${doc.data().guia_id}</th>
                 <td>${doc.data().fechacompra}</td>
+                <td>${doc.data().venta}</td>
                 <td class="font-weight-bold">${doc.data().name}</td>
                 <td>${doc.data().producto}</td>
                 <td>${doc.data().bultos}</td>
                 <td>${doc.data().punto_de_entrega}</td>
                 <td>${doc.data().via}</td>
                 <td class="bg-warning text-light">En Agencia</td>
-                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
             </tr>
             `
         });
     });
 };
 function entregadoBuscar() {
-    db.collection("seguimiento").where('status', '==', 'Entregado').onSnapshot((querySnapshot) => {
+    db.collection("seguimiento").where('status', '==', 'Entregado').orderBy("guia_id", "desc").onSnapshot((querySnapshot) => {
         data.innerHTML = '';
         querySnapshot.forEach((doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
@@ -395,13 +407,14 @@ function entregadoBuscar() {
             <tr>
                 <th scope="row">${doc.data().guia_id}</th>
                 <td>${doc.data().fechacompra}</td>
+                <td>${doc.data().venta}</td>
                 <td class="font-weight-bold">${doc.data().name}</td>
                 <td>${doc.data().producto}</td>
                 <td>${doc.data().bultos}</td>
                 <td>${doc.data().punto_de_entrega}</td>
                 <td>${doc.data().via}</td>
                 <td class="bg-success text-light">Entregado</td>
-                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
+                <td><button class="float-right but" onclick="editar('${doc.id}','${doc.data().name}','${doc.data().bultos}','${doc.data().via}','${doc.data().punto_de_entrega}','${doc.data().guia_id}','${doc.data().status}','${doc.data().producto}','${doc.data().fechacompra}','${doc.data().venta}')"><i class="fas fa-edit icon"></i></button><button class="float-right but" onclick="eliminar('${doc.id}')"><i class="fas fa-trash icon"></i></button></td>
             </tr>
             `
         });
