@@ -41,7 +41,7 @@ function datosShow() {
                                 <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
                         </div>
                     </div>
-                            <p class="card-text">Guia Via Cargo: En instantes le informaremos el numero de guia Via Cargo</p>
+                            <p class="card-text font-weight-bold">Guia Via Cargo: En instantes le informaremos el numero de guia Via Cargo</p>
                             <p class="status badge badge-danger p-3">Pedido Recibido</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ function datosShow() {
                                     <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
                             </div>
                         </div>
-                            <p class="card-text">Guia Via Cargo: En instantes le informaremos el numero de guia Via Cargo</p>
+                            <p class="card-text font-weight-bold">Guia Via Cargo: En instantes le informaremos el numero de guia Via Cargo</p>
                             <p class="status badge badge-primary p-3">Pedido Despachado  </p>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ function datosShow() {
                                 <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
                         </div>
                     </div>
-                            <p class="card-text">Guia Via Cargo: ${doc.data().via}</p>
+                            <p class="card-text font-weight-bold">Guia Via Cargo: ${doc.data().via}</p>
                             <p class="status badge badge-info p-3">En Viaje</p>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ function datosShow() {
                                     <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
                             </div>
                         </div>
-                            <p class="card-text">Guia Via Cargo: ${doc.data().via}</p>
+                            <p class="card-text font-weight-bold">Guia Via Cargo: ${doc.data().via}</p>
                             <p class="status badge badge-warning p-3">En Agencia</p>
                     </div>
                 </div>
