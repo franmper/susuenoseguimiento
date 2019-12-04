@@ -41,7 +41,7 @@ function datosShow() {
                                 <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
                         </div>
                     </div>
-                            <p class="card-text">Guia Via Cargo: En instantes le informaremos el numero de Via Cargo</p>
+                            <p class="card-text">Guia Via Cargo: En instantes le informaremos el numero de guia Via Cargo</p>
                             <p class="status badge badge-danger p-3">Pedido Recibido</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ function datosShow() {
                                     <p class="text-right mb-2">Bultos: ${doc.data().bultos}</p>
                             </div>
                         </div>
-                            <p class="card-text">Guia Via Cargo: En instantes le informaremos el numero de Via Cargo</p>
+                            <p class="card-text">Guia Via Cargo: En instantes le informaremos el numero de guia Via Cargo</p>
                             <p class="status badge badge-primary p-3">Pedido Despachado  </p>
                     </div>
                 </div>
